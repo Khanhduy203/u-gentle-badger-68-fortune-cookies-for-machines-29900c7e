@@ -17,6 +17,12 @@ function guard(line) {
   if (line.includes("\n") || line.includes("\r")) {
     throw new Error("fortune must be exactly one line");
   }
+  for (let i = 0; i < line.length; i++) {
+    const code = line.charCodeAt(i);
+    if (code < 0x20 || code === 0x7f) {
+      throw new Error("fortune must not contain control characters");
+    }
+  }
   if (line.trim() !== line) {
     throw new Error("fortune must not have leading or trailing whitespace");
   }
